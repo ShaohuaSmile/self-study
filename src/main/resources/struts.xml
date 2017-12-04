@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.i18n.reload" value="false" />
+    <constant name="struts.devMode" value="false" />
+
+    <include file="struts-default.xml" />
+
+    <package name="struts2" extends="struts-default" namespace="/">
+        <action name="hello" class="shaohua.study.struts2.HelloAction" method="say">
+            <result name="success">
+             ../view/Hello.jsp
+            </result>
+        </action>
+    </package>
+
+</struts>

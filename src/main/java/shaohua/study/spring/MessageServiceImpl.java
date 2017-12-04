@@ -1,6 +1,7 @@
-package shaohua.study.spring;/**
- * Created by Administrator on 2017/8/14.
- */
+package shaohua.study.spring;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Function:
@@ -8,5 +9,11 @@ package shaohua.study.spring;/**
  * @Autor Shaohua Liu
  * @Date 2017/8/14
  */
-public class MessageServiceImpl {
+@Service
+public class MessageServiceImpl implements MessageService{
+    @Autowired
+    private MessageDao messageDao;
+    public void printMessage() {
+        System.out.println(messageDao.getHello());
+    }
 }

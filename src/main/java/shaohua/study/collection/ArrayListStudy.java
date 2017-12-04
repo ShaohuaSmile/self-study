@@ -11,7 +11,7 @@ import java.util.List;
 public class ArrayListStudy {
     public static void main(String... args){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(1462118400000L);
+        Date date = new Date(1503504000000L);
         System.out.println(format.format(date));
         List<String> list = new ArrayList<String>();
 
