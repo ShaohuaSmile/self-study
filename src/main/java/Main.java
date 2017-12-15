@@ -1,32 +1,17 @@
-package shaohua.study.javaBasic;
-
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
  * 功能描述:
  *
  * @author Liush
- * @date 2017/12/04 14:33
+ * @date 2017/12/05 12:00
  */
 public class Main {
+
     public static void main(String[] args){
-        BigDecimal fen = new BigDecimal(String.valueOf(327.6));
-        BigDecimal yuan = fen.divide(new BigDecimal(String.valueOf(100)), 2, BigDecimal.ROUND_DOWN);
-        System.out.print(yuan.doubleValue());
-
-        System.exit(0);
-        int a = 1 << 30; //2~30
-        int b = Integer.MAX_VALUE; //2~31 - 1
-        System.out.println(a);
-        System.out.println(b);
-
-        int c = 0x10; // 000...0 0001 0000; 16
-        System.out.println(c >>> 4);
-        System.exit(0);
         List<String> strs = scanner();
         //按照第一个字符排序
-        Collections.sort(strs,new Comparator<String>() {
+        strs.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 return compareTo(o2,o1);
