@@ -10,7 +10,20 @@ import java.util.*;
  * @date 2017/12/04 14:33
  */
 public class Main {
+    private static int minRunLength(int n) {
+        assert n >= 0;
+        int r = 0;      // Becomes 1 if any 1 bits are shifted off
+        while (n >= 32) {
+            r |= (n & 1);
+            n >>= 1;
+        }
+        return n + r;
+    }
     public static void main(String[] args){
+        for(int i = 32; i < 1000; i++){
+            System.out.println(i + "-" + minRunLength(i));
+        }
+        System.exit(0);
         BigDecimal fen = new BigDecimal(String.valueOf(327.6));
         BigDecimal yuan = fen.divide(new BigDecimal(String.valueOf(100)), 2, BigDecimal.ROUND_DOWN);
         System.out.print(yuan.doubleValue());
