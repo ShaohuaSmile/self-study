@@ -12,7 +12,7 @@ public class Formula {
     public static void main(String... args){
         //String express = "6-((4-2)*12)*4";
         String express = "6-((12-12)*12)*4";//
-        //String express = "5+44*2-50";
+        //String express = "5+44*21-50";
         //System.out.println(subExpress(express,0,express.length()-1));
         System.out.println(calculate(express));
         System.out.println("res="+(6-((12-12)*12)*4));

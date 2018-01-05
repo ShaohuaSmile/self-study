@@ -23,7 +23,9 @@ public class Test {
         for(int i=0;i<1000;i++){
             map.put("key"+i,"value"+i);
         }
+        Integer key = new Integer(1);
         System.out.println(map.get("lili"));
+        System.out.println(map.get(key+""));
         System.out.println("=============");
         MySet<MyMap.MapNode<String,String>> set = map.entrySet();
         for(MyMap.MapNode<String,String> entry : set){
