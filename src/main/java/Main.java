@@ -9,22 +9,25 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args){
-        List<String> strs = scanner();
-        //按照第一个字符排序
-        strs.sort(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return compareTo(o2,o1);
-            }
-        });
-        //Collections.sort(strs);
-        StringBuilder sb = new StringBuilder();
-        for(String str : strs){
-            sb.append(str);
-        }
-        String strNum = sb.toString();
-        long maxNum = Long.valueOf(strNum);
-        System.out.println(maxNum);
+        boolean a = true;
+        boolean b = false;
+        System.out.println(a^b);
+//        List<String> strs = scanner();
+//        //按照第一个字符排序
+//        strs.sort(new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                return compareTo(o2,o1);
+//            }
+//        });
+//        //Collections.sort(strs);
+//        StringBuilder sb = new StringBuilder();
+//        for(String str : strs){
+//            sb.append(str);
+//        }
+//        String strNum = sb.toString();
+//        long maxNum = Long.valueOf(strNum);
+//        System.out.println(maxNum);
     }
 
     /**

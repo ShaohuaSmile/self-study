@@ -19,9 +19,38 @@ public class Main {
         }
         return n + r;
     }
+    private static Integer parseInt(String value, boolean ignoreDot) {
+
+
+        Double doubleValue;
+        try{
+            doubleValue = Double.parseDouble(value);
+        }catch (Exception e){
+            System.out.println(value + "不是数字类型，不能转换为double");
+            return null;
+        }
+        String[] dotSplit = value.split("\\.");
+        Double minInt = Double.valueOf(dotSplit[0]);
+        if(ignoreDot || minInt.equals(doubleValue)){
+            return Integer.valueOf(Integer.parseInt(dotSplit[0]));
+        }
+        System.out.println("参数不是整数类型" + value);
+        return null;
+    }
     public static void main(String[] args){
-        for(int i = 32; i < 1000; i++){
-            System.out.println(i + "-" + minRunLength(i));
+        ddd.lookup.get("HL001");
+
+        Map m = ddd.lookup;
+        Map n = ddd.lookup2;
+        Map p = ddd.lookuplj;
+        //System.exit(0);
+        for(int i = 0; i < 100000; i++){
+            Integer integer = parseInt(i+".00",false);
+            if(integer == null){
+                break;
+            }
+            System.out.println(integer);
+            //System.out.println(i + "-" + minRunLength(i));
         }
         System.exit(0);
         BigDecimal fen = new BigDecimal(String.valueOf(327.6));

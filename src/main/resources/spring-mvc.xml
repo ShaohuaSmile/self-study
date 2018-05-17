@@ -21,12 +21,21 @@
     <!--<mvc:annotation-driven />-->
     <!-- ... -->
     <!-- configure the InternalResourceViewResolver -->
+    <mvc:annotation-driven conversion-service="conversionService"/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           id="internalResourceViewResolver">
         <!-- 前缀 -->
         <property name="prefix" value="/WEB-INF/view/" />
         <!-- 后缀 -->
         <property name="suffix" value=".jsp" />
+    </bean>
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="shaohua.study.web.StringTrimer"></bean>
+            </set>
+        </property>
+
     </bean>
 
 </beans>
