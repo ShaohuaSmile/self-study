@@ -13,33 +13,8 @@
            http://www.springframework.org/schema/mvc/spring-mvc.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <context:component-scan base-package="shaohua.study.web"/>
-    <!--&lt;!&ndash; don't handle the static resource &ndash;&gt;-->
-    <!--<mvc:default-servlet-handler />-->
-
-    <!--&lt;!&ndash; if you use annotation you must configure following setting &ndash;&gt;-->
-    <!--<mvc:annotation-driven />-->
-    <!-- ... -->
-    <!-- configure the InternalResourceViewResolver -->
-    <mvc:annotation-driven conversion-service="conversionService"/>
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          id="internalResourceViewResolver">
-        <!-- 前缀 -->
-        <property name="prefix" value="/WEB-INF/view/" />
-        <!-- 后缀 -->
-        <property name="suffix" value=".jsp" />
-    </bean>
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters">
-            <set>
-                <bean class="shaohua.study.web.StringTrimer"></bean>
-            </set>
-        </property>
-
-    </bean>
-
     <!-- aop -->
-    <bean id="man" class="shaohua.study.spring.aop.Man" ></bean>
+    <bean id="manPerson" class="shaohua.study.spring.aop.Man" ></bean>
     <bean id="timeAdvice" class="shaohua.study.spring.aop.TimeHelper"></bean>
     <bean id="timePointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
         <property name="pattern" value=".*"></property>
@@ -48,10 +23,14 @@
         <property name="advice" ref="timeAdvice"></property>
         <property name="pointcut" ref="timePointcut"></property>
     </bean>
-    <bean id="proxyId" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target" ref="man"></property>
+    <bean id="manProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="manPerson"></property>
         <property name="interceptorNames" value="timeAdvisor"></property>
         <property name="proxyInterfaces" value="shaohua.study.spring.aop.Person"></property>
     </bean>
+
+
+    <aop:aspectj-autoproxy/>
+    <bean id="logAdvise" class="shaohua.study.spring.aop.LogHelper"></bean>
     <!-- aop -->
 </beans>

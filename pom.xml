@@ -12,6 +12,7 @@
     <properties>
         <mybatis.version>3.3.0</mybatis.version>
         <springframework.version>4.3.10.RELEASE</springframework.version>
+        <org.aspectj-version>1.8.1</org.aspectj-version>
     </properties>
     <dependencies>
         <dependency>
@@ -68,6 +69,19 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${springframework.version}</version>
         </dependency>
+        <!-- AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${org.aspectj-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${org.aspectj-version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -122,6 +136,7 @@
                 <includes>
                     <include>spring-mvc.xml</include>
                     <include>struts.xml</include>
+                    <include>spring.xml</include>
                 </includes>
             </resource>
         </resources>
