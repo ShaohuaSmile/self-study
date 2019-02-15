@@ -1,7 +1,27 @@
 package shaohua.study.javaBasic;
 
+import com.sun.mail.util.logging.MailHandler;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 功能描述:
@@ -37,51 +57,75 @@ public class Main {
         System.out.println("参数不是整数类型" + value);
         return null;
     }
-    public static void main(String[] args){
-        ddd.lookup.get("HL001");
-
-        Map m = ddd.lookup;
-        Map n = ddd.lookup2;
-        Map p = ddd.lookuplj;
-        //System.exit(0);
-        for(int i = 0; i < 100000; i++){
-            Integer integer = parseInt(i+".00",false);
-            if(integer == null){
-                break;
-            }
-            System.out.println(integer);
-            //System.out.println(i + "-" + minRunLength(i));
+    private static String changePhoneNum(String str){
+        Pattern pattern = Pattern.compile("[0-9]{11}");
+        Matcher m = pattern.matcher(str);
+        String mun = "";
+        if(m.find()){
+            mun = m.group(0);
+            //todo change
+            String newNum = mun.substring(0,3)+"****"+mun.substring(7);
+           str = str.substring(0,str.indexOf(mun))+newNum+str.substring(str.indexOf(mun)+mun.length());
+            return changePhoneNum(str);
         }
-        System.exit(0);
-        BigDecimal fen = new BigDecimal(String.valueOf(327.6));
-        BigDecimal yuan = fen.divide(new BigDecimal(String.valueOf(100)), 2, BigDecimal.ROUND_DOWN);
-        System.out.print(yuan.doubleValue());
+        return str;
+    }
+    public static void main(String[] args) throws Exception, MessagingException {
+        String str = "ajkdsjfadj17171717175uuufada11112222212jd";
+        System.out.print(changePhoneNum(str));
 
         System.exit(0);
-        int a = 1 << 30; //2~30
-        int b = Integer.MAX_VALUE; //2~31 - 1
-        System.out.println(a);
-        System.out.println(b);
-
-        int c = 0x10; // 000...0 0001 0000; 16
-        System.out.println(c >>> 4);
-        System.exit(0);
-        List<String> strs = scanner();
-        //按照第一个字符排序
-        Collections.sort(strs,new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return compareTo(o2,o1);
-            }
-        });
-        //Collections.sort(strs);
-        StringBuilder sb = new StringBuilder();
-        for(String str : strs){
-            sb.append(str);
+        // sendMail("HELLO test","test");
+        while(true){
+            monitor();
+            Thread.sleep(1000*60*3);
         }
-        String strNum = sb.toString();
-        long maxNum = Long.valueOf(strNum);
-        System.out.println(maxNum);
+//
+//        System.exit(0);
+//        ddd.lookup.get("HL001");
+//
+//        Map m = ddd.lookup;
+//        Map n = ddd.lookup2;
+//        Map p = ddd.lookuplj;
+//        //System.exit(0);
+//        for(int i = 0; i < 100000; i++){
+//            Integer integer = parseInt(i+".00",false);
+//            if(integer == null){
+//                break;
+//            }
+//            System.out.println(integer);
+//            //System.out.println(i + "-" + minRunLength(i));
+//        }
+//        System.exit(0);
+//        BigDecimal fen = new BigDecimal(String.valueOf(327.6));
+//        BigDecimal yuan = fen.divide(new BigDecimal(String.valueOf(100)), 2, BigDecimal.ROUND_DOWN);
+//        System.out.print(yuan.doubleValue());
+//
+//        System.exit(0);
+//        int a = 1 << 30; //2~30
+//        int b = Integer.MAX_VALUE; //2~31 - 1
+//        System.out.println(a);
+//        System.out.println(b);
+//
+//        int c = 0x10; // 000...0 0001 0000; 16
+//        System.out.println(c >>> 4);
+//        System.exit(0);
+//        List<String> strs = scanner();
+//        //按照第一个字符排序
+//        Collections.sort(strs,new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                return compareTo(o2,o1);
+//            }
+//        });
+//        //Collections.sort(strs);
+//        StringBuilder sb = new StringBuilder();
+//        for(String str : strs){
+//            sb.append(str);
+//        }
+//        String strNum = sb.toString();
+//        long maxNum = Long.valueOf(strNum);
+//        System.out.println(maxNum);
     }
 
     /**
@@ -147,5 +191,129 @@ public class Main {
 
         }
         return new ArrayList<String>(Arrays.asList(strs));
+    }
+
+    private static void monitor() throws Exception {
+        CloseableHttpClient client = HttpClients.custom().build();
+        HttpPost post = new HttpPost("http://cx.ahzsks.cn/pugao/pglq2018_in.php");
+        CloseableHttpResponse response = client.execute(post);
+        InputStream is = response.getEntity().getContent();
+        StringBuilder sb = new StringBuilder();
+        byte[] buffer = new byte[1024];
+        while (is.read(buffer) != -1){
+            sb.append(new String(buffer));
+        }
+
+        String key = "<div class=\"right\"><input type=\"text\" autocomplete=\"off\" name=\"yzm\" id=\"yzm\"  size=\"10\" maxlength=\"4\"/>";
+        int index = sb.indexOf(key)+key.length();
+        String code = sb.substring(index,index+4);
+        System.out.println(sb.toString());
+        System.out.println("code="+code);
+
+        String url = "http://cx.ahzsks.cn/pugao/pglq2018_out.php";
+        //url = url + "?ksh=18341721151824&sfzh=342921199902050018&yzm="+code;
+        HttpPost post2 = new HttpPost(url);
+        List<BasicNameValuePair> Listnvps = new ArrayList();
+        Listnvps.add(new BasicNameValuePair("ksh", "18341721151824"));
+        Listnvps.add(new BasicNameValuePair("sfzh", "342921199902050018"));
+        Listnvps.add(new BasicNameValuePair("yzm", code));
+        post2.setEntity(new UrlEncodedFormEntity(Listnvps, "UTF-8"));
+        CloseableHttpResponse response2 = client.execute(post2);
+        InputStream is2 = response2.getEntity().getContent();
+        String resultStr = EntityUtils.toString(response2.getEntity(), Charset.forName("GBK"));
+//        StringBuilder sb2 = new StringBuilder();
+//        byte[] buffer2 = new byte[1024];
+//        while (is2.read(buffer2) != -1){
+//            sb2.append(new String(buffer2,"utf-8"));
+//        }
+        System.out.println("result="+resultStr);
+
+        String resKey = "暂无录取信息";
+
+        if(!resultStr.contains(resKey)){
+            sendMail("录取了",resultStr);
+        }else{
+            sendMail2("未录取",resultStr);
+        }
+    }
+    public static void sendMail(String title,String content) throws MessagingException {
+        // 发件人电子邮箱
+        String from = "shaohuasmile@163.com";
+
+        // 收件人电子邮箱
+        String to = "liushjob@163.com";
+
+        // 指定发送邮件的主机为 localhost
+        String host = "smtp.163.com";
+
+        // 获取系统属性
+        Properties properties = System.getProperties();
+
+        // 设置邮件服务器
+        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.smtp.port", "25");
+        properties.setProperty("mail.smtp.auth", "true");
+
+        // 获取默认session对象
+        Session session = Session.getDefaultInstance(properties,new Authenticator(){
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication("shaohuasmile@163.com", "xzyflzjx111??");
+            }
+        });
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(from);
+        Address toAddr = new InternetAddress(to);
+        Address toAddr2 = new InternetAddress("2440244805@qq.com");
+
+        Address[] tos = new Address[2];
+        tos[0] = toAddr;
+        tos[1] = toAddr2;
+        message.addRecipients(Message.RecipientType.TO,tos);
+        message.setReplyTo(new Address[]{toAddr});
+        message.setSubject(title,"UTF-8");
+        message.setContent(content,"text/html;charset=gb2312");
+        System.out.println("--------开始发送邮件-------");
+        Transport.send(message,"shaohuasmile@163.com","xzyflzjx111??");
+        System.out.println("--------完成发送邮件-------");
+    }
+    public static void sendMail2(String title,String content) throws MessagingException {
+        // 发件人电子邮箱
+        String from = "shaohuasmile@163.com";
+
+        // 收件人电子邮箱
+        String to = "liushjob@163.com";
+
+        // 指定发送邮件的主机为 localhost
+        String host = "smtp.163.com";
+
+        // 获取系统属性
+        Properties properties = System.getProperties();
+
+        // 设置邮件服务器
+        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.smtp.port", "25");
+        properties.setProperty("mail.smtp.auth", "true");
+
+        // 获取默认session对象
+        Session session = Session.getDefaultInstance(properties,new Authenticator(){
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication("shaohuasmile@163.com", "xzyflzjx111??");
+            }
+        });
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(from);
+        Address toAddr = new InternetAddress(to);
+       // Address toAddr2 = new InternetAddress("2440244805@qq.com");
+
+        Address[] tos = new Address[1];
+        tos[0] = toAddr;
+        //tos[1] = toAddr2;
+        message.addRecipients(Message.RecipientType.TO,tos);
+        message.setReplyTo(new Address[]{toAddr});
+        message.setSubject(title,"UTF-8");
+        message.setContent(content,"text/html;charset=gb2312");
+        System.out.println("--------开始发送邮件-------");
+        Transport.send(message,"shaohuasmile@163.com","xzyflzjx111??");
+        System.out.println("--------完成发送邮件-------");
     }
 }

@@ -1,3 +1,5 @@
+import java.io.*;
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -6,9 +8,50 @@ import java.util.*;
  * @author Liush
  * @date 2017/12/05 12:00
  */
+class Person implements Serializable{
+    private static final long serialVersionUID = 7815426752583648734L;
+    private String name;
+//    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+//    public int getAge() {
+//        return age;
+//    }
+//
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+}
 public class Main {
 
-    public static void main(String[] args){
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+        Field[] fields = B.class.getFields();
+        for(Field field : fields){
+            System.out.println(field.getName());
+        }
+        System.exit(0);
+        File file = new File("C:\\Users\\Administrator\\Desktop\\Person.object");
+        ObjectInputStream oos = new ObjectInputStream(new FileInputStream(file));
+        Person person = (Person) oos.readObject();
+        System.out.println(person.getName());
+//        Person p = new Person();
+//        p.setAge(20);
+//        p.setName("shaohua");
+//        File file = new File("C:\\Users\\Administrator\\Desktop\\Person.object");
+//        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+//        oos.writeObject(p);
+//        oos.flush();
+//        oos.close();
+        System.exit(0);
         boolean a = true;
         boolean b = false;
         System.out.println(a^b);
@@ -94,4 +137,15 @@ public class Main {
         }
         return new ArrayList<String>(Arrays.asList(strs));
     }
+}
+
+class A{
+    private String name;
+    private static String age;
+    public String sex;
+    public static String hh;
+}
+class B extends A{
+    private String jj;
+    private static String gg;
 }

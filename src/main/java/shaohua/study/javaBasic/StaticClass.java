@@ -83,4 +83,6 @@ public class StaticClass {
             this.stopRegular = stopRegular;
         }
     }
+
+
 }

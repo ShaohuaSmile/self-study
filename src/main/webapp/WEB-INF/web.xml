@@ -9,7 +9,7 @@
         <param-value>classpath:spring-mvc.xml</param-value>
     </context-param>
     
-     base servlet study
+     <!--base servlet study-->
     <filter>
         <filter-name>common-filter</filter-name>
         <filter-class>shaohua.study.web.filter.CommonFilter</filter-class>

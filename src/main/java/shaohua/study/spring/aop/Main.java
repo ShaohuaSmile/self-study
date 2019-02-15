@@ -11,6 +11,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Main {
     public static void main(String... args){
+        String amiUrl = "http://ami.ziroom.com/AMI/";
+        if(amiUrl != null && amiUrl.contains("/AMI")){
+            amiUrl = amiUrl.substring(0,amiUrl.indexOf("/AMI"));
+        }
+        System.out.println(amiUrl);
+        System.exit(0);
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         Person person = (Person) context.getBean("manProxy");
         person.eat();

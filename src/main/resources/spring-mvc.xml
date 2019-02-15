@@ -13,7 +13,7 @@
            http://www.springframework.org/schema/mvc/spring-mvc.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
-    <context:component-scan base-package="shaohua.study.web"/>
+    <context:component-scan base-package="shaohua.study.*"/>
     <!--&lt;!&ndash; don't handle the static resource &ndash;&gt;-->
     <!--<mvc:default-servlet-handler />-->
 
@@ -22,6 +22,14 @@
     <!-- ... -->
     <!-- configure the InternalResourceViewResolver -->
     <mvc:annotation-driven conversion-service="conversionService"/>
+    <mvc:interceptors>
+        <!--放在外面表示拦截所有-->
+        <bean id="commonInteceptor" class="shaohua.study.web.mvcinterceptor.CommonInterceptor"/>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/*"/>-->
+            <!--<bean id="commonInteceptor" class="shaohua.study.web.mvcinterceptor.CommonInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    </mvc:interceptors>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           id="internalResourceViewResolver">
         <!-- 前缀 -->

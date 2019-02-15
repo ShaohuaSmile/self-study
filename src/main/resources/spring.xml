@@ -13,6 +13,10 @@
            http://www.springframework.org/schema/mvc/spring-mvc.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="shaohua.study.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
     <!-- aop -->
     <bean id="manPerson" class="shaohua.study.spring.aop.Man" ></bean>
     <bean id="timeAdvice" class="shaohua.study.spring.aop.TimeHelper"></bean>
@@ -33,4 +37,5 @@
     <aop:aspectj-autoproxy/>
     <bean id="logAdvise" class="shaohua.study.spring.aop.LogHelper"></bean>
     <!-- aop -->
+
 </beans>

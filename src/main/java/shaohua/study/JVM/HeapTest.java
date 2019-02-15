@@ -10,9 +10,31 @@ import java.util.List;
  * @date 2017/11/30 10:35
  */
 public class HeapTest {
+    static List<byte[]> list = new ArrayList<>();
+    static int j=0;
     public static void main(String... args){
+        int ia = 129;
+        int ib = 0b00000000_00000000_0000000_10000001;
+        System.out.println(ib);
+        byte ba = (byte) ia;
+        int bb = 0b10000001;
+        int bb1 = 0b10000000;
+        int bb2 = 0b11111111;
+        System.out.println(ba);
+        byte bb3 = (byte) 0b10000000;
+        System.out.println("bb3="+bb3);
+        char c = '你';
+        System.out.println(Integer.toBinaryString(c));
+        int ci = c;
+        System.out.println(ci);
         //heapOutOfMemory();
         //stackOverFlow(0);
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        while (true)
         PSYoungGen();
     }
 
@@ -56,13 +78,18 @@ public class HeapTest {
      * @date 2017/11/30
      */
     private static void PSYoungGen(){
+        j++;
         List<byte[]> list = new ArrayList<byte[]>();
-        int i = 0;
-        while (true){
-            byte[] bytes = new byte[1024*1024]; //1M
-            System.out.println("-------added---to "+ ++i);
+
+        for(int i=0; i<10; i++){
+            byte[] bytes = new byte[1024*1024*4]; //1M
+            //System.out.println("-------added---to "+ i);
             list.add(bytes);
-            System.out.println("=======added----------");
+            //System.out.println("=======added----------");
+            HeapTest.list.add(bytes);
+        }
+        if(j%10 == 0){
+            HeapTest.list = new ArrayList<>();
         }
     }
 }
